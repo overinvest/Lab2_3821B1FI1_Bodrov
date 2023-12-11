@@ -4,11 +4,16 @@ let gameState = null;
 let teamDisplay = null;
 let gameOver = false;
 let winner = null;
+let gameHistoryDrawed = false;
 
 socket.emit("new player");
 
 socket.on("state", function (data) {
     gameState = data;
+
+    gameOver = gameState.gameOver.state;
+    winner = gameState.gameOver.winner;
+
     renderGame();
 });
 
@@ -59,7 +64,10 @@ const createHtmlTableFromData = (data) => {
 
 
 socket.on('gameHistory', (result) => {
-    createHtmlTableFromData(result);
+    if (!gameHistoryDrawed) {
+        createHtmlTableFromData(result);
+        gameHistoryDrawed = true;
+    }
 });
 
 function renderGame() {
@@ -106,6 +114,7 @@ function selectTeam(team) {
 
 function startNewGame() {
     gameOver = false;
+    gameHistoryDrawed = false;
     socket.emit('newGame');
 
     const oldTable = document.querySelector('table');
@@ -118,6 +127,7 @@ function startNewGame() {
 
 function renderField() {
     const table = document.createElement('table');
+    table.classList.add('game-field');
 
     for (let i = 0; i < 10; i++) {
         const row = document.createElement('tr');
@@ -126,17 +136,23 @@ function renderField() {
             const cell = document.createElement('td');
 
             if (gameState.field[i][j] === 'Крестики') {
-                cell.textContent = 'X';
-                cell.classList.add('cross');
+                // cell.textContent = 'X';
+                const cross = document.createElement('div');
+                cross.classList.add('cross');
+                cell.appendChild(cross);
             } else if (gameState.field[i][j] === 'Нолики') {
-                cell.textContent = 'O';
-                cell.classList.add('zero');
+                const zero = document.createElement('div');
+                zero.classList.add('zero');
+                cell.appendChild(zero);
             } else if (gameState.field[i][j] === 'Крестики!') {
-                cell.textContent = 'X';
-                cell.classList.add('eaten-cross');
+                // cell.textContent = 'X';
+                const eaten_cross = document.createElement('div');
+                eaten_cross.classList.add('eaten-cross');
+                cell.appendChild(eaten_cross);
             } else if (gameState.field[i][j] === 'Нолики!') {
-                cell.textContent = 'O';
-                cell.classList.add('eaten-zero');
+                const eaten_zero = document.createElement('div');
+                eaten_zero.classList.add('eaten-zero');
+                cell.appendChild(eaten_zero);
             }
 
             if (!gameOver) {
@@ -175,6 +191,9 @@ function renderField() {
         document.body.appendChild(newGameButton);
 
         socket.emit('gameHistory', document);
+
+        socket.emit('GetGameHistory');
+
     }
 }
 

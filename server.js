@@ -42,6 +42,7 @@ let gameState = {
     movesLeft: 3,
     gameStartTime: null,
     new_game: false,
+    gameOver: { state: false, winner: null },
 };
 
 io.on('connection', (socket) => {
@@ -53,6 +54,7 @@ io.on('connection', (socket) => {
                 moves: 3
             });
         }
+
         socket.emit("state", gameState);
     })
 
@@ -64,6 +66,7 @@ io.on('connection', (socket) => {
         gameState.movesLeft = 3;
         gameState.gameStartTime = new Date();
         gameState.new_game = true;
+        gameState.gameOver.state = false;
         io.emit('gameState', gameState);
     }
 
@@ -83,6 +86,9 @@ io.on('connection', (socket) => {
         io.emit('gameHistory', resultArray);
     };
     
+    socket.on('GetGameHistory', function () {
+        sendGameHistory();
+    })
 
     socket.on('newGame', () => {
         newGameFunc();
@@ -121,8 +127,9 @@ io.on('connection', (socket) => {
 
         let oppositeTeam = PlayerTeam === 'Крестики' ? 'Нолики' : 'Крестики';
 
-        const gameover = checkVictory(oppositeTeam) === false;
-        if (gameover) {
+        gameState.gameOver.state = checkVictory(oppositeTeam) === false;
+        gameState.gameOver.winner = PlayerTeam;
+        if (gameState.gameOver.state) {
             const date = new Date();
 
             const year = date.getFullYear();
@@ -143,8 +150,6 @@ io.on('connection', (socket) => {
             const gameTime = gameDurationInMinutes.toString().padStart(2, '0') + ':' + (gameDurationInSeconds < 10 ? '0' : '') + gameDurationInSeconds;
 
             addGameHistory(formattedDate, formattedTime, gameTime, PlayerTeam);
-
-            sendGameHistory();
 
             io.emit('gameOver', PlayerTeam);
         }
@@ -252,7 +257,7 @@ function checkVictory(team) {
 
 function gameStarted(team, x_, y_) {
 
-    let { x, y } = team === "Крестики" ? { x: 0, y: 9 } : { x: 9, y: 0 }
+    let { x, y } = team === "Крестики" ? { x: 9, y: 0 } : { x: 0, y: 9 }
 
     if (gameState.field[x_][y_] === null && (x === x_ && y === y_)) {
         return false;

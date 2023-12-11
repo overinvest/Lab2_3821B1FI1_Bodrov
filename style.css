@@ -42,19 +42,51 @@ td {
     color: blue;
 }
 
-.zero {
-    color: red;
+/* cross */
+
+.cross {
+    transition: 3ms all;
+    margin: auto;
+    width: 24px;
+    height: 24px;
+    border-radius: 100px;
+    background:
+    linear-gradient(45deg, transparent calc(50% - 1px), #000000 calc(50% - 1px), #000000 calc(50% + 1px), transparent calc(50% + 1px)),
+    linear-gradient(-45deg, transparent calc(50% - 1px), #000000 calc(50% - 1px), #000000 calc(50% + 1px), transparent calc(50% + 1px));
 }
 
 .eaten-cross {
-    background-color: red;
-    font-weight: bold;
+    transition: 3ms all;
+    margin: auto;
+    width: 24px;
+    height: 24px;
+    border-radius: 100px;
+    background:
+    linear-gradient(45deg, transparent calc(50% - 1px), #000000 calc(50% - 1px), #000000 calc(50% + 1px), transparent calc(50% + 1px)),
+    linear-gradient(-45deg, transparent calc(50% - 1px), #000000 calc(50% - 1px), #000000 calc(50% + 1px), transparent calc(50% + 1px)),
+    radial-gradient(transparent calc(50% - 5px), #000000 calc(50%), #000000 calc(50%), transparent calc(50%));
+}
+
+.zero {
+    transition: 3ms all;
+    margin: auto;
+    width: 24px;
+    height: 24px;
+    border-radius: 100px;
+    background:
+    radial-gradient(transparent calc(50% - 3px), #000000 calc(50%), #000000 calc(50%), transparent calc(50%));
 }
 
 .eaten-zero {
-    background-color: blue;
-    font-weight: bold;
+    transition: 3ms all;
+    margin: auto;
+    width: 24px;
+    height: 24px;
+    border-radius: 100px;
+    background:
+    radial-gradient(#000000, #000000 calc(50%), #000000 calc(50%), transparent calc(50%));
 }
+/* cross */
 
 .team-display {
     font-size: 20px;
