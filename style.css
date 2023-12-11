@@ -1,0 +1,123 @@
+body {
+    background-color: #2b2b2b;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 50px auto;
+}
+
+td {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #7f8c8d;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.cross {
+    color: blue;
+}
+
+.zero {
+    color: red;
+}
+
+.eaten-cross {
+    background-color: red;
+    font-weight: bold;
+}
+
+.eaten-zero {
+    background-color: blue;
+    font-weight: bold;
+}
+
+.team-display {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.game-over {
+    font-size: 72px;
+    text-align: center;
+}
+
+.game-over.win {
+    color: green;
+}
+
+.game-over.lose {
+    color: red;
+}
+
+.game-history {
+    position: relative;
+    height: 50vh;
+    overflow-y: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 1em;
+    box-sizing: border-box;
+}
+  
+.game-history table {
+    border-collapse: collapse;
+    margin-left: auto;
+    color: #2c3e50;
+}
+  
+.game-history th, .game-history td {
+    border: 1px solid #bdc3c7;
+    padding: 0.5em;
+    text-align: left;
+}
+  
+.game-history th {
+    background-color: #ecf0f1;
+    color: #7f8c8d;
+}
+  
+.game-history tr:nth-child(even) {
+    background-color: #ecf0f1;
+}
+
+.game-history td {
+    padding: 0.5em;
+}
+
+.game-history::-webkit-scrollbar {
+    width: 10px;
+}
+
+.game-history::-webkit-scrollbar-thumb {
+    background-color: #7f8c8d;
+    border-radius: 5px;
+}
